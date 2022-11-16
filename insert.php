@@ -35,13 +35,16 @@ if(!empty($_GET) && empty($_GET["tbl"])){
 <?php
 $tablename=$_GET["tbl"];
 $databasename=$_GET["db"];
-//code to get row data
-$table_data=$conn->prepare("SELECT * FROM $tablename");
-$table_data->execute() or die("error retrieving table data");
-$data=$table_data->get_result();
 
 setcookie("itbl", $tablename, time() + (86400 * 30), "/");
 setcookie("idb", $databasename, time() + (86400 * 30), "/");
+
+//code to get row data
+$table_data=$conn->prepare("SELECT * FROM `$databasename`.$tablename");
+$table_data->execute() or die("error retrieving table data");
+$data=$table_data->get_result();
+
+
 
 //code to fetch field data;
 $fields=$data->fetch_fields();
